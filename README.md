@@ -21,7 +21,10 @@ Nothing is sent to a customer without a human approving it.
 | `lead-desk.template.yaml` | The whole desk: three agents, two linked rooms, and their instructions |
 | `data/playbook.md` | The scoring rules, the offer and the tone, for a made-up interiors firm |
 | `data/leads.csv` | 20 made-up enquiries in English, Hindi and Marathi |
-| `tests/` | Checks that the template and the data hang together |
+| `scripts/feed.py` | Sends the sample enquiries into a room through the webhook platform |
+| `scripts/receiver.py` | Prints what the agents say back, after checking Switch's signature |
+| `docs/walkthrough.md` | A shot list for recording the desk in Console |
+| `tests/` | Checks the template, the data, the feed and the signature check |
 
 All names, numbers and messages are invented. Replace `playbook.md` with your
 own rules and the same desk works for your business.
@@ -39,7 +42,7 @@ own rules and the same desk works for your business.
 ## Run it
 
 You need a running Switch with Switch Console connected to a machine that has a
-coding agent installed (Claude, Codex or OpenCode).
+coding agent installed (any one Switch supports).
 
 1. Copy `data/` into each agent's working directory, or point the template's
    `directory` at this folder.
@@ -61,6 +64,37 @@ Paste one into the inbox:
 > and two wardrobes, around 9 lakh. Can a designer come on Saturday?
 
 The playbook gives this 3 + 3 + 2 + 1 = 9 points, so expect `HOT`.
+
+## Demo without a chat app
+
+Two small scripts let you show the desk without Slack or Teams. They talk to
+Switch's "Custom app (webhook)" platform.
+
+```bash
+# 1. print what the desk says back (terminal one)
+SWITCH_SIGNING_SECRET=<signing secret> python scripts/receiver.py
+
+# 2. send the sample enquiries into the room (terminal two)
+SWITCH_EVENTS_URL=<address Switch shows> SWITCH_TOKEN=<inbound token> \
+  python scripts/feed.py --join --delay 5
+```
+
+`--dry-run` prints the events without sending, and `--limit 5` sends only the
+first five. Sending the same file twice is safe: each enquiry has a fixed id and
+Switch handles it once. [docs/walkthrough.md](docs/walkthrough.md) is a shot
+list for recording the whole desk in Console.
+
+The webhook platform is in an open pull request on Switch and may not be in
+your version yet.
+
+## What is verified
+
+- The feed and the receiver, against a running Switch: connection, room
+  creation, each enquiry arriving once, a resend ignored, and a signed reply
+  printed.
+- The scout's scoring on all 20 sample enquiries, run by hand.
+- The template, with Switch's own template reader.
+- Not yet seen: the agents answering inside Console. See the walkthrough.
 
 ## Check the files
 
