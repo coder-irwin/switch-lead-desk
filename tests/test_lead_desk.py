@@ -45,3 +45,12 @@ def test_the_room_playbook_is_the_playbook_file():
     for room in TEMPLATE["rooms"]:
         docs = {d["name"]: d for d in room["docs"]}
         assert docs["Lead playbook"]["content"].strip() == playbook
+
+
+def test_the_agents_use_the_tiers_the_playbook_defines():
+    playbook = (ROOT / "data" / "playbook.md").read_text(encoding="utf-8")
+    assert "ROUTINE" in playbook and "REVIEW" in playbook
+    writer = next(a for a in TEMPLATE["agents"] if a["name"].endswith("writer"))
+    keeper = next(a for a in TEMPLATE["agents"] if a["name"].endswith("keeper"))
+    assert "APPROVE ROUTINE" in writer["instructions"]
+    assert "REVIEW" in keeper["instructions"]

@@ -21,6 +21,20 @@ no year means its next occurrence.
 - 4 to 7: WARM
 - 3 or less: COLD
 
+## Which drafts need a closer look
+
+A draft is **ROUTINE** when the lead is HOT, in Pune or Mumbai, wants work on
+a home, states their own budget and timing, and asks for nothing the offer
+below does not cover. A person can approve these in one batch.
+
+A draft is **REVIEW**, and is read on its own before it is approved, when any
+of these is true:
+
+- the lead is outside Pune and Mumbai
+- the work is not a home (an office, a shop)
+- the score depends on a signal the scout marked provisional or asked about
+- the lead asks for a price, a discount, a completion date, or anything else the offer does not cover (asking when we can visit is fine: the visit is the offer)
+
 ## The offer
 
 A free site visit and a written estimate within three working days.

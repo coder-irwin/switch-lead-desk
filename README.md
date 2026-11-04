@@ -29,6 +29,28 @@ Nothing is sent to a customer without a human approving it.
 All names, numbers and messages are invented. Replace `playbook.md` with your
 own rules and the same desk works for your business.
 
+## Approvals that scale
+
+An approval step stops working when a person is asked to approve everything: they
+start ticking boxes without reading. The desk tries to keep the human step
+meaningful in three ways.
+
+- **Tiers.** Every draft is marked `ROUTINE` or `REVIEW`, using rules written
+  in the playbook (outside Pune and Mumbai, not a home, a provisional score, a
+  request for a price or a completion date). A person approves all routine
+  drafts at once with `APPROVE ROUTINE`, and a review draft only by naming the
+  lead, for example `APPROVE Vikram`.
+- **Evidence on every draft.** Each one carries its tier and the reason, the
+  score with its arithmetic, and what the draft commits the firm to, so the
+  person approving can check it in seconds.
+- **A daily summary.** `@harbor-keeper today` lists what is waiting, review
+  drafts first and the longest waiting at the top, and how many approvals were
+  in a batch and how many were made one by one.
+
+Nothing is sent without a person. The tiers only decide how much of their
+attention a draft asks for. Change the rules in the playbook document and the
+next draft follows them.
+
 ## The three agents
 
 - **scout** reads each enquiry, scores it with the playbook and replies in the
@@ -112,6 +134,9 @@ your version yet.
 - The Mattermost seed script, against a stand-in for the Mattermost API in the
   tests. It has not been run against a real Mattermost.
 - The scout's scoring on all 20 sample enquiries, run by hand.
+- The writer's tiers and evidence block on four sample leads, and the keeper's
+  summary on a made-up event log, each run by hand outside Switch. Of the four
+  drafts, three came out `REVIEW` with the right reason and one `ROUTINE`.
 - The template, with Switch's own template reader.
 - Not yet seen: the agents answering inside Console. See the walkthrough.
 
