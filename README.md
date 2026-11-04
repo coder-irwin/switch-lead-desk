@@ -47,7 +47,7 @@ meaningful in three ways.
   drafts first and the longest waiting at the top, and how many approvals were
   in a batch and how many were made one by one.
 
-Nothing is sent without a person. The tiers only decide how much of their
+Approving records the decision and marks the reply ready; the desk does not send it anywhere itself. The tiers only decide how much of their
 attention a draft asks for. Change the rules in the playbook document and the
 next draft follows them.
 
@@ -138,7 +138,16 @@ your version yet.
   summary on a made-up event log, each run by hand outside Switch. Of the four
   drafts, three came out `REVIEW` with the right reason and one `ROUTINE`.
 - The template, with Switch's own template reader.
-- Not yet seen: the agents answering inside Console. See the walkthrough.
+- The whole flow with real agents on a running Switch server, in two Switch-only
+  rooms (no chat app): the scout scored a pasted enquiry with its arithmetic and
+  handed it to the writer across the linked rooms, the writer drafted a reply
+  with its tier, reasoning and promises, `APPROVE ROUTINE` was recorded, and the
+  keeper logged it and gave the summary. One enquiry, run once.
+- Not yet seen: the same flow through Mattermost in Switch Console, the review
+  tier with several leads at once, and a rule change from the chat. See the
+  walkthrough.
+- The desk records an approval; it does not send the reply anywhere. Sending is
+  left to whoever approves, or to a channel you add.
 
 ## Check the files
 
