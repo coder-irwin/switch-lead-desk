@@ -41,20 +41,37 @@ own rules and the same desk works for your business.
 
 ## Run it
 
-You need a running Switch with Switch Console connected to a machine that has a
-coding agent installed (any one Switch supports).
+You need Switch Console and a coding agent installed on the same computer (any
+one Switch supports, signed in). When Console sets up a server on your
+computer it starts a Mattermost alongside it and connects it, so there is
+nothing else to install. See Switch's
+[Mattermost page](https://docs.switchagents.ai/flintai/switch/deploy/messaging-apps/mattermost)
+if you would rather use your own.
 
-1. Copy `data/` into each agent's working directory, or point the template's
-   `directory` at this folder.
+1. Clone this repo and copy `data/` into the working directory the agents
+   will use (or point the template's `directory` at this folder).
 2. In Switch Console, create a team from `lead-desk.template.yaml`. Pick a
-   short team name, for example `harbor`.
-3. Open `harbor-inbox` and ask:
+   short team name, for example `harbor`. This creates the three agents and the
+   `harbor-inbox` and `harbor-review` channels.
+3. Open Mattermost from the server's **Home** page (**Sign-in details…** shows
+   the login) and open `harbor-inbox`.
+4. Send the sample enquiries. Either ask in the channel:
 
    > @harbor-scout work through data/leads.csv and score every lead
 
-4. Open `harbor-review`, read the drafts and reply `APPROVE` or tell the
+   or post them as if they were arriving one at a time:
+
+   ```bash
+   MM_USER=<your username> MM_PASSWORD=<your password> \
+     python scripts/seed_mattermost.py --url http://localhost:8065 \
+       --team <team slug> --agent harbor-scout --delay 5
+   ```
+
+   `--dry-run` prints the messages without connecting, and `--limit 5` sends
+   only the first five.
+5. Open `harbor-review`, read the drafts and reply `APPROVE` or tell the
    writer what to change.
-5. Ask `@harbor-keeper today` for the summary.
+6. Ask `@harbor-keeper today` for the summary.
 
 ## Try your own enquiry
 
@@ -67,8 +84,8 @@ The playbook gives this 3 + 3 + 2 + 1 = 9 points, so expect `HOT`.
 
 ## Demo without a chat app
 
-Two small scripts let you show the desk without Slack or Teams. They talk to
-Switch's "Custom app (webhook)" platform.
+Two more scripts show the desk without Mattermost, Slack or Teams. They talk
+to Switch's "Custom app (webhook)" platform.
 
 ```bash
 # 1. print what the desk says back (terminal one)
@@ -92,6 +109,8 @@ your version yet.
 - The feed and the receiver, against a running Switch: connection, room
   creation, each enquiry arriving once, a resend ignored, and a signed reply
   printed.
+- The Mattermost seed script, against a stand-in for the Mattermost API in the
+  tests. It has not been run against a real Mattermost.
 - The scout's scoring on all 20 sample enquiries, run by hand.
 - The template, with Switch's own template reader.
 - Not yet seen: the agents answering inside Console. See the walkthrough.
