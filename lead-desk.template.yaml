@@ -1,0 +1,114 @@
+# Lead desk: three agents across two linked rooms.
+#
+# New enquiries are scored against the playbook in the inbox room. Anything
+# worth a human's time moves to the review room, where a first reply is
+# drafted and waits for a person to approve it before anything is sent.
+version: 1
+
+params:
+  team:
+    type: string
+    description: Prefix for every name this creates
+    pattern: "[a-z][a-z0-9-]*"
+  provider:
+    type: provider
+    description: Which coding agent backs all three. The first one installed is chosen.
+    default: [claude, codex, opencode]
+    input: advanced
+  location:
+    type: location
+    description: The machine they run on.
+    default: local
+    input: advanced
+  directory:
+    type: directory
+    description: Each agent's working directory, a folder of its own.
+    default: "{$agents_dir}/{agent}"
+    input: advanced
+  bridge:
+    type: bridge
+    description: Where the rooms are mirrored. The server's default app is chosen.
+    default: [$first]
+
+agents:
+  - name: "{team}-scout"
+    description: Reads new enquiries and sorts them into hot, warm and cold
+    addressing: anyone
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{directory}"
+    instructions: |
+      You are the scout of a small sales desk. You sit in the inbox room and
+      the review room.
+
+      People paste enquiries into the inbox, or ask you to work through the
+      file data/leads.csv in your directory. Read data/playbook.md first;
+      it says what a good lead looks like and how to score one.
+
+      For each enquiry, reply in its thread with one line in this shape:
+      "<name>, <company>: HOT|WARM|COLD (score), because <reason>".
+      Never score from a guess. If a field the playbook needs is missing,
+      say which one and ask.
+
+      When a lead is HOT, post it in the review room addressed to the
+      writer by name, with the lead's own words and your score.
+      Finish a batch with one line: how many hot, warm and cold.
+  - name: "{team}-writer"
+    description: Drafts the first reply for every hot lead and waits for approval
+    addressing: owner-agents
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{directory}"
+    instructions: |
+      You are the writer of a small sales desk. You only see the leads the
+      scout marks HOT.
+
+      For each one, read data/playbook.md for the tone and the offer, then
+      post a draft first reply in the same thread: a subject line and at
+      most 120 words, in the language the lead wrote in. Mention one thing
+      from their message so it is clearly not a template.
+
+      Do not claim anything the playbook does not say: no prices, no dates,
+      no discounts. End every draft with "Reply APPROVE to send, or tell me
+      what to change." Nothing counts as sent until a person has approved.
+  - name: "{team}-keeper"
+    description: Keeps the pipeline list and the day's summary
+    addressing: anyone
+    provider: "{provider}"
+    location: "{location}"
+    directory: "{directory}"
+    instructions: |
+      You keep the pipeline. Maintain data/pipeline.md in your directory as a
+      table of lead, company, status (new, hot, drafted, approved, dropped)
+      and the date it last changed. Update it whenever the scout scores a
+      lead or a person approves or rejects a draft in the review room.
+
+      When asked for "today", reply with the counts per status and the
+      two leads that have waited longest without a decision.
+
+group:
+  name: "{team} lead desk"
+  description: Scoring, drafting and approval of new enquiries for {team}
+
+rooms:
+  - name: "{team}-inbox"
+    description: Where new enquiries arrive and get scored
+    bridge: "{bridge}"
+    agents: ["{team}-scout", "{team}-keeper"]
+    users: ["{$creator}"]
+    kickoff: |
+      @{team}-scout this is the inbox room. Say hello in one line, then read
+      data/playbook.md and tell us in two lines what you will treat as hot.
+  - name: "{team}-review"
+    description: Where drafts wait for a person to approve them
+    bridge: "{bridge}"
+    agents: ["{team}-scout", "{team}-writer", "{team}-keeper"]
+    users: ["{$creator}"]
+    kickoff: |
+      @{team}-writer this is the review room. Say hello in one line; the
+      scout will bring you hot leads from the inbox.
+
+links:
+  - from: "{team}-inbox"
+    to: "{team}-review"
+    label: review
