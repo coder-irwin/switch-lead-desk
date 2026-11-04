@@ -4,13 +4,15 @@ We design and fit kitchens and wardrobes for homes in Pune and Mumbai.
 
 ## What a good lead looks like
 
-Score each point, then add them up.
+Score each point, then add them up. Measure "within 3 months" from the
+date the enquiry was received, not from today. A lead who gives a month with
+no year means its next occurrence.
 
 | Signal | Points |
 |---|---|
 | Says when they need it (within 3 months) | 3 |
 | Gives a budget of ₹5 lakh or more | 3 |
-| Owns the property or is the decision maker | 2 |
+| Owns the property or is the decision maker (a family member who will "decide later" does not count) | 2 |
 | Asks for a site visit or a call | 2 |
 | In Pune or Mumbai | 1 |
 | Only asking for a price list, nothing else | -2 |

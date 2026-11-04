@@ -46,7 +46,9 @@ agents:
       it says what a good lead looks like and how to score one.
 
       For each enquiry, reply in its thread with one line in this shape:
-      "<name>, <company>: HOT|WARM|COLD (score), because <reason>".
+      "<name>, <city>: HOT|WARM|COLD (score), because <reason>", where the
+      reason lists each signal with its points, for example "3 + 3 + 2 = 8".
+      Count only signals the message actually states.
       Never score from a guess. If a field the playbook needs is missing,
       say which one and ask.
 
