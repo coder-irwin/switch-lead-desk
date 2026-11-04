@@ -35,6 +35,13 @@ def test_leads_have_unique_ids_and_messages():
 
 def test_agents_read_files_that_exist():
     text = (ROOT / "lead-desk.template.yaml").read_text(encoding="utf-8")
+    assert "data/leads.csv" in text
     for name in ("playbook.md", "leads.csv"):
-        assert f"data/{name}" in text
         assert (ROOT / "data" / name).exists()
+
+
+def test_the_room_playbook_is_the_playbook_file():
+    playbook = (ROOT / "data" / "playbook.md").read_text(encoding="utf-8").strip()
+    for room in TEMPLATE["rooms"]:
+        docs = {d["name"]: d for d in room["docs"]}
+        assert docs["Lead playbook"]["content"].strip() == playbook

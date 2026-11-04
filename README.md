@@ -19,7 +19,7 @@ Nothing is sent to a customer without a human approving it.
 | File | What it is |
 |---|---|
 | `lead-desk.template.yaml` | The whole desk: three agents, two linked rooms, and their instructions |
-| `data/playbook.md` | The scoring rules, the offer and the tone, for a made-up interiors firm |
+| `data/playbook.md` | The scoring rules, the offer and the tone, for a made-up interiors firm. The template carries a copy as a room document |
 | `data/leads.csv` | 20 made-up enquiries in English, Hindi and Marathi |
 | `scripts/feed.py` | Sends the sample enquiries into a room through the webhook platform |
 | `scripts/receiver.py` | Prints what the agents say back, after checking Switch's signature |
@@ -103,8 +103,12 @@ pip install pyyaml pytest
 pytest
 ```
 
+## Change a rule from the chat
+
+The playbook lives in both rooms as a document called **Lead playbook**, so the whole team can see the rules the scout is using. Ask the scout what it scores on, or tell it to change a rule, for example "enquiries from Nashik now count as local". It applies the new rule from the next enquiry on, and you can put the change into the document so it stays.
+
 ## Make it yours
 
-- Change the scoring table and the offer in `data/playbook.md`.
+- Change the scoring table and the offer in `data/playbook.md`, and paste the same text into the template's `docs:` content (a test checks the two match).
 - Edit the `instructions:` of an agent to change how it behaves.
 - Add more rooms or agents in the template; each room names its members.

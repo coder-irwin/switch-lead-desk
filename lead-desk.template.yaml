@@ -42,8 +42,9 @@ agents:
       the review room.
 
       People paste enquiries into the inbox, or ask you to work through the
-      file data/leads.csv in your directory. Read data/playbook.md first;
-      it says what a good lead looks like and how to score one.
+      file data/leads.csv in your directory. The room's "Lead playbook"
+      document says what a good lead looks like and how to score one; read
+      it first, and use its latest version.
 
       For each enquiry, reply in its thread with one line in this shape:
       "<name>, <city>: HOT|WARM|COLD (score), because <reason>", where the
@@ -65,7 +66,7 @@ agents:
       You are the writer of a small sales desk. You only see the leads the
       scout marks HOT.
 
-      For each one, read data/playbook.md for the tone and the offer, then
+      For each one, read the "Lead playbook" document for the tone and the offer, then
       post a draft first reply in the same thread: a subject line and at
       most 120 words, in the language the lead wrote in. Mention one thing
       from their message so it is clearly not a template.
@@ -100,7 +101,47 @@ rooms:
     users: ["{$creator}"]
     kickoff: |
       @{team}-scout this is the inbox room. Say hello in one line, then read
-      data/playbook.md and tell us in two lines what you will treat as hot.
+      the "Lead playbook" document and tell us in two lines what you will treat as hot.
+    docs:
+      - name: Lead playbook
+        description: What a good lead looks like, how to score one, the offer and the tone
+        instructions: |
+          Score every enquiry with this document and write replies in the tone it
+          gives. If a person changes a rule in the channel, say so and apply the
+          new rule from the next enquiry on.
+        content: |
+          # Lead playbook — Harbor Interiors (sample company)
+
+          We design and fit kitchens and wardrobes for homes in Pune and Mumbai.
+
+          ## What a good lead looks like
+
+          Score each point, then add them up. Measure "within 3 months" from the
+          date the enquiry was received, not from today. A lead who gives a month with
+          no year means its next occurrence.
+
+          | Signal | Points |
+          |---|---|
+          | Says when they need it (within 3 months) | 3 |
+          | Gives a budget of ₹5 lakh or more | 3 |
+          | Owns the property or is the decision maker (a family member who will "decide later" does not count) | 2 |
+          | Asks for a site visit or a call | 2 |
+          | In Pune or Mumbai | 1 |
+          | Only asking for a price list, nothing else | -2 |
+
+          - 8 or more: HOT
+          - 4 to 7: WARM
+          - 3 or less: COLD
+
+          ## The offer
+
+          A free site visit and a written estimate within three working days.
+          Nothing else is promised in a first reply: no prices, no discounts, no dates.
+
+          ## Tone
+
+          Warm, short, plain. Use the person's first name. Reply in the language they
+          wrote in (English, Hindi or Marathi). Sign off as "Meera, Harbor Interiors".
   - name: "{team}-review"
     description: Where drafts wait for a person to approve them
     bridge: "{bridge}"
@@ -109,6 +150,46 @@ rooms:
     kickoff: |
       @{team}-writer this is the review room. Say hello in one line; the
       scout will bring you hot leads from the inbox.
+    docs:
+      - name: Lead playbook
+        description: What a good lead looks like, how to score one, the offer and the tone
+        instructions: |
+          Score every enquiry with this document and write replies in the tone it
+          gives. If a person changes a rule in the channel, say so and apply the
+          new rule from the next enquiry on.
+        content: |
+          # Lead playbook — Harbor Interiors (sample company)
+
+          We design and fit kitchens and wardrobes for homes in Pune and Mumbai.
+
+          ## What a good lead looks like
+
+          Score each point, then add them up. Measure "within 3 months" from the
+          date the enquiry was received, not from today. A lead who gives a month with
+          no year means its next occurrence.
+
+          | Signal | Points |
+          |---|---|
+          | Says when they need it (within 3 months) | 3 |
+          | Gives a budget of ₹5 lakh or more | 3 |
+          | Owns the property or is the decision maker (a family member who will "decide later" does not count) | 2 |
+          | Asks for a site visit or a call | 2 |
+          | In Pune or Mumbai | 1 |
+          | Only asking for a price list, nothing else | -2 |
+
+          - 8 or more: HOT
+          - 4 to 7: WARM
+          - 3 or less: COLD
+
+          ## The offer
+
+          A free site visit and a written estimate within three working days.
+          Nothing else is promised in a first reply: no prices, no discounts, no dates.
+
+          ## Tone
+
+          Warm, short, plain. Use the person's first name. Reply in the language they
+          wrote in (English, Hindi or Marathi). Sign off as "Meera, Harbor Interiors".
 
 links:
   - from: "{team}-inbox"
