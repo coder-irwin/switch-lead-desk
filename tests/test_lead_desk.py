@@ -54,3 +54,7 @@ def test_the_agents_use_the_tiers_the_playbook_defines():
     keeper = next(a for a in TEMPLATE["agents"] if a["name"].endswith("keeper"))
     assert "APPROVE ROUTINE" in writer["instructions"]
     assert "REVIEW" in keeper["instructions"]
+
+
+def test_the_provider_defaults_to_the_first_one_ready():
+    assert TEMPLATE["params"]["provider"]["default"] == ["$first"]

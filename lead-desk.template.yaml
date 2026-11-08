@@ -12,8 +12,8 @@ params:
     pattern: "[a-z][a-z0-9-]*"
   provider:
     type: provider
-    description: Which coding agent backs all three. The first one installed is chosen.
-    default: [claude, codex, opencode]
+    description: Which coding agent backs all three. The first one installed and signed in is chosen.
+    default: [$first]
     input: advanced
   location:
     type: location
